@@ -1,10 +1,11 @@
+// controllers/equipmentController.ts
 import { Request, Response } from 'express';
-import Equipos from '../models/equipmentModel';
+import * as equipmentService from '../services/equipmentService';
 
 // Obtener todos los equipos
 export const getEquipments = async (req: Request, res: Response) => {
     try {
-        const equipos = await Equipos.findAll();
+        const equipos = await equipmentService.getAllEquipments();
         res.json(equipos);
     } catch (error) {
         res.status(500).json({ message: 'Error al obtener los equipos', error });
@@ -15,7 +16,7 @@ export const getEquipments = async (req: Request, res: Response) => {
 export const getEquipmentById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const equipo = await Equipos.findByPk(id);
+        const equipo = await equipmentService.getEquipmentById(id);
         if (!equipo) {
             return res.status(404).json({ message: 'Equipo no encontrado' });
         }
@@ -32,7 +33,7 @@ export const createEquipment = async (req: Request, res: Response) => {
         if (!name || !type || !status || !location || !fechaCompra) {
             return res.status(400).json({ message: 'Faltan datos para crear el equipo' });
         }
-        const newEquipment = await Equipos.create({ name, type, status, location, fechaCompra });
+        const newEquipment = await equipmentService.createEquipment({ name, type, status, location, fechaCompra });
         res.status(201).json(newEquipment);
     } catch (error) {
         res.status(400).json({ message: 'Error al crear el equipo', error });
@@ -43,9 +44,9 @@ export const createEquipment = async (req: Request, res: Response) => {
 export const updateEquipment = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const [updated] = await Equipos.update(req.body, { where: { id } });
+        const updated = await equipmentService.updateEquipment(id, req.body);
         if (updated) {
-            const updatedEquipment = await Equipos.findByPk(id);
+            const updatedEquipment = await equipmentService.getEquipmentById(id);
             res.json(updatedEquipment);
         } else {
             res.status(404).json({ message: 'Equipo no encontrado' });
@@ -59,7 +60,7 @@ export const updateEquipment = async (req: Request, res: Response) => {
 export const deleteEquipment = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const deleted = await Equipos.destroy({ where: { id } });
+        const deleted = await equipmentService.deleteEquipment(id);
         if (deleted) {
             res.json({ message: 'Equipo eliminado correctamente' });
         } else {

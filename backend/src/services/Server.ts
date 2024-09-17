@@ -1,10 +1,12 @@
 import express, {Application} from 'express';
-// import cors from 'cors';
+import cors from 'cors';
 import sequelize, { connectDB } from '../db/connect';
 import { PORT } from '../config/config';
 import '../models/equipmentModel'
 import '../models/userModel'
-
+//rutas
+import router from '../routes/auth.routes';
+import EquipoRouter from '../routes/equipos.router';
 
 //clase del servicio de mi aplicacion
 
@@ -16,6 +18,7 @@ class Server {
         this.app= express();
         this.port=PORT;
         this.connectToDatabase();
+        this.routes();
 
     }
     //metodo para conectarce a la base de datos 
@@ -29,6 +32,11 @@ class Server {
         } catch (error) {
             console.error('Error al conectar a la base de datos', error);
         }
+    }
+    //metodo para instaciar las rutas
+    routes():void{
+        this.app.use('/api',router)
+        this.app.use('/api',EquipoRouter)
     }
 
     //iniciar servicio
