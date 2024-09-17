@@ -1,72 +1,42 @@
-// controllers/equipmentController.ts
-import { Request, Response } from 'express';
-import * as equipmentService from '../services/equipmentService';
+import EquiposService from "../services/equipmentService";
+import { Request,Response } from "express";
+import { InterfazEquiposImformaticos } from "../models/types/equipos.type";
 
-// Obtener todos los equipos
-export const getEquipments = async (req: Request, res: Response) => {
+export const createEquipos= async (req:Request,res:Response):Promise<void>=>{
     try {
-        const equipos = await equipmentService.getAllEquipments();
-        res.json(equipos);
-    } catch (error) {
-        res.status(500).json({ message: 'Error al obtener los equipos', error });
+        const data: InterfazEquiposImformaticos = req.body;
+        const equipo = await EquiposService.createEquipos(data);
+        res.status(201).json(equipo);
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+}
+export const getEquipos = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const equipos = await EquiposService.getAllEquipos();
+        res.status(200).json(equipos);
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
     }
 };
 
-// Obtener un equipo por ID
-export const getEquipmentById = async (req: Request, res: Response) => {
+export const updateEquipos = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { id } = req.params;
-        const equipo = await equipmentService.getEquipmentById(id);
-        if (!equipo) {
-            return res.status(404).json({ message: 'Equipo no encontrado' });
-        }
-        res.json(equipo);
-    } catch (error) {
-        res.status(500).json({ message: 'Error al obtener el equipo', error });
+        const id = parseInt(req.params.id, 10);
+        const data: Partial<InterfazEquiposImformaticos> = req.body;
+        const equipo = await EquiposService.updateEquipos(id, data);
+        res.status(200).json(equipo);
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
     }
 };
 
-// Crear un nuevo equipo
-export const createEquipment = async (req: Request, res: Response) => {
+export const deleteEquipos = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { name, type, status, location, fechaCompra } = req.body;
-        if (!name || !type || !status || !location || !fechaCompra) {
-            return res.status(400).json({ message: 'Faltan datos para crear el equipo' });
-        }
-        const newEquipment = await equipmentService.createEquipment({ name, type, status, location, fechaCompra });
-        res.status(201).json(newEquipment);
-    } catch (error) {
-        res.status(400).json({ message: 'Error al crear el equipo', error });
-    }
-};
-
-// Actualizar un equipo existente
-export const updateEquipment = async (req: Request, res: Response) => {
-    try {
-        const { id } = req.params;
-        const updated = await equipmentService.updateEquipment(id, req.body);
-        if (updated) {
-            const updatedEquipment = await equipmentService.getEquipmentById(id);
-            res.json(updatedEquipment);
-        } else {
-            res.status(404).json({ message: 'Equipo no encontrado' });
-        }
-    } catch (error) {
-        res.status(400).json({ message: 'Error al actualizar el equipo', error });
-    }
-};
-
-// Eliminar un equipo
-export const deleteEquipment = async (req: Request, res: Response) => {
-    try {
-        const { id } = req.params;
-        const deleted = await equipmentService.deleteEquipment(id);
-        if (deleted) {
-            res.json({ message: 'Equipo eliminado correctamente' });
-        } else {
-            res.status(404).json({ message: 'Equipo no encontrado' });
-        }
-    } catch (error) {
-        res.status(400).json({ message: 'Error al eliminar el equipo', error });
+        const id = parseInt(req.params.id, 10);
+        await EquiposService.deleteEquipos(id);
+        res.status(200).json({ message: 'Equipo eliminado' });
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
     }
 };
