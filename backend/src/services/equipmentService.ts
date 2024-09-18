@@ -18,6 +18,13 @@ class EquiposService {
             throw new Error('Error al mostrar los equipos')
         }
     }
+    async getEquipoById(id: number): Promise<IEquiposImfor | null> {
+        try {
+            return await Equipos.findByPk(id);
+        } catch (error) {
+            throw new Error('Error al obtener el equipo');
+        }
+    }
     async updateEquipos(id:number,data:Partial<InterfazEquiposImformaticos>):Promise<IEquiposImfor>{
         try {
             const equipo= await Equipos.findByPk(id);

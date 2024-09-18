@@ -4,7 +4,7 @@ import { URI } from '../config/config';
 // Configura Sequelize
 const sequelize = new Sequelize(URI as string, {
   dialect: 'postgres',
-  logging: false, // Cambia a `console.log` para ver las consultas SQL
+  logging: false, 
 });
 
 // Función para conectar a la base de datos

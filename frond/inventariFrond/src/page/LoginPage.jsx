@@ -37,40 +37,43 @@ const LoginPage = () => {
       setError('Error de inicio de sesión. Por favor, verifica tus credenciales y vuelve a intentarlo.');
     }
   };
-  
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Login</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <form onSubmit={handleLogin}>
-        <div className="mb-4">
-          <label className="block text-gray-700" htmlFor="username">Username</label>
-          <input
-            id="username"
-            type="text"
-            className="w-full px-3 py-2 border border-gray-300 rounded"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700" htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            className="w-full px-3 py-2 border border-gray-300 rounded"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">Login</button>
-      </form>
-      <p className="mt-4">
-        No tienes una cuenta? <a href="/register" className="text-blue-500">Registrarse</a>
-      </p>
+    <div className="flex items-center justify-center min-h-screen bg-pink-50">
+      <div className="max-w-sm w-full bg-white p-6 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold mb-6 text-center text-pink-600">💗Login💗</h1>
+        {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
+        <form onSubmit={handleLogin}>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="username">Username</label>
+            <input
+              id="username"
+              type="text"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="w-full px-4 py-2 bg-pink-600 text-white font-semibold rounded-lg hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-400">
+            Login
+          </button>
+        </form>
+        <p className="mt-4 text-center">
+          No tienes una cuenta?🤔 <a href="/register" className="text-pink-600 hover:underline">Registrarse</a>
+        </p>
+      </div>
     </div>
   );
 };
