@@ -83,6 +83,8 @@ const EditEquipoPage = () => {
         >
           🔙Volver a Dashboard
         </button>
+        {/* Bienvenido a FORMOTEX */}
+        <h2 className="text-2xl font-semibold text-center text-pink-500 mb-4">¡Bienvenido a FORMOTEX! 💅</h2>
         <h1 className="text-white text-3xl font-bold">📝Editar Equipo📝</h1>
       </div>
       <div className="max-w-md mx-auto p-6 bg-gray-100 min-h-screen">

@@ -1,0 +1,32 @@
+# Documentación del Proyecto - Sistema de Gestión de Equipos Informáticos
+
+##  Problematica:
+ 
+  - La empresa FORMOTEX se dedica al mantenimiento y distribución de equipos informáticos para diversas organizaciones. Actualmente, la empresa gestiona su inventario de manera manual, lo que provoca errores en el seguimiento de los equipos, como la falta de información actualizada sobre su estado, ubicación y fecha de adquisición.
+ ## Solucion:
+  -Para llevar a cabo esta problematica decidi desarrollar un aplicacion web que permita a los administradores de la empresa gestionar de manera eficiente el invetario de equipos informaticos
+   -Funciones que implemente en la aplicacion:
+    *
+1. Back:
+-
+- Utilizacion del JWT:
+ En mi back estoy utilizando el token jwt para authenticar a los usuarios despues de que inicie sesión y para autorizar las acciones del crud para el rol admin.
+  * Autenticación:
+  -¿Como funciona?: Cuando un usuario prporciona sus crdenciales de nombre de usuario y contraseña en el endpont /login, se verifica si las credenciales son correctas ,si lo son se genera un token,
+    este token contiene la informacion del usuario que inicio sesion como su id y su rol, el token se envia al cliente como respuesta.
+  *Autorización:
+  -¿Como funciona?:Una vez que el cliente tiene el token, lo deve incluir en cada solisitud que realize en el servidor.
+    En cada solisitud que se relize por el cliente, el servidor valida el token para asegurarse de que el usuario esta autenticado y autorizado para acceder a siertos recursos,
+    para mi es muy util utilizar jwt ya que me permite darle ciertos permisos a mis roles, por ejemplo yo tengo dos roles en mi aplicacion,
+    el rol del 'admin' para que el administrador pueda (crear,editar y elimminar un equipo informatico) , en cambio el rol del 'user' solo tiene permiso de ver la lista de los equipos y nada mas.
+  *¿Donde configuro mi Token?: En la carpeta 'src' creo otra carpeta llamada 'utils¿ y ahi creo mi archivo de configuracion, donde importo la libreria'jsonwebtoken ' que proporciona las funciones nesesarias para crear y verificar el token,
+   Luego importo mi clave secreta que la traigo de mi varible de entorno, esta clave se utiliza para firmar el token y asegurarse de que no pueda ser falsificado,esta firma asegura que solo el servidor que tiene esa clave pueda pueda verificar si el token es genuino.
+   Despues cree una funcion llamada createJWT donde recibe un 'payload' el cual es un objeto que contiene los datos que deseo incluir en mi token en mi caso es el (id y rol), luego se retorna una promesa que cuando se resuelve devuelve el token creado, y si hay algun error la promesa se rechaza.
+   Dentro d ela promesa tengo la funcion 'jwt.sing:' es la que crea y firma el token, donde esta tomando los parametros proporcionado por 'payload' mas la clave secreta y alguna sopciones como las de '{ expiresIn: '1h' }' la cual le dise a jwt que el token debe expirar en 1 hora, despues de ese tiempo
+   el token ya no sera valido.Tambien se le pasa un callback que s eejecuta cuando el token ah sido creado , err por si ubo algun problema al firmar el token, y toke si se firmo correctamente.
+   *¿Donde implemento este JWT?: Lo estoy implementando en el controlador de la autehnticacion del usuario, donde ahi tengo un controlador para registrar un usario y tambien para el logueo del usuario.
+     -Login del usuario: En el enpoind de mi login basicamente lo que estoy hacien es,primero alamceno las credenciales para el inicio de sesion en una constante, luego aplico verificaciones para saber si el usuario exite en la base de datos y tambien comparo las contraseñas,luego si las crdenciales ingresadas
+        por el usuario son validas genero un token utilizando la funcion (CreateJWT) que ya habia configurado en mi carpeta 'utils', tambien le paso el payload que contiene los datos (id y rol), y finalmente el token lo envio al cliente en respuesta junto al rol del usuario.
+     -Registro de usuario:En el endpont de register basicamente lo que hago es que , cuando un usario se registra se verificar si ese usuario ya existe en la base de datos, si no existe encripto la contraseña utilizando bcrypt.hash y creas el nuevo usuario en la base de datos.
+        Despues de crear el usuario se genera un token d ela misma manera que la de login y luego ese token se envia al cliente junto con el rol.
+-

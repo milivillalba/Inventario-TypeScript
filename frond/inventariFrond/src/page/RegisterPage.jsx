@@ -34,6 +34,8 @@ const RegisterPage = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-pink-50">
       <div className="max-w-md w-full bg-white p-6 rounded-lg shadow-lg">
+        {/* Bienvenido a FORMOTEX */}
+        <h2 className="text-2xl font-semibold text-center text-pink-500 mb-4">¡Bienvenido a FORMOTEX! 💅</h2>
         <h2 className="text-3xl font-bold mb-6 text-center text-pink-600">💗Register💗</h2>
         <form onSubmit={handleRegister}>
           <div className="mb-4">
