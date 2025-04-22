@@ -7,6 +7,6 @@ export const URI: VE = process.env.DB_URI;
 export const JWT_SECRET: VE = process.env.JWT_SECRET;
 
 //para verificar si se cargan 
-console.log('PORT:', PORT);
-console.log('URI:', URI);
-console.log('JWT_SECRET:', JWT_SECRET);
+// console.log('PORT:', PORT);
+// console.log('URI:', URI);
+// console.log('JWT_SECRET:', JWT_SECRET);
