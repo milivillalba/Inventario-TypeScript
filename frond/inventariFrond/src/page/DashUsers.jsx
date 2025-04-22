@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const DashboardUser = () => {
   const [equipos, setEquipos] = useState([]);
@@ -10,7 +11,7 @@ const DashboardUser = () => {
     const fetchEquipos = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:4000/api/equipos', {
+        const response = await fetch(`${API_URL}/api/equipos`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },

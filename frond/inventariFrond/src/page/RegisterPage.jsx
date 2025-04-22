@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
@@ -10,7 +11,7 @@ const RegisterPage = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:4000/api/register', {
+      const response = await fetch( `${API_URL}/api/register`,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

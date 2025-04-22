@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const CreateEquipoPage = () => {
   const [name, setName] = useState('');
@@ -19,7 +20,7 @@ const CreateEquipoPage = () => {
     try {
       const token = localStorage.getItem('token'); // Obtén el token desde local storage
 
-      const response = await fetch('http://localhost:4000/api/equipos', {
+      const response = await fetch(`${API_URL}/api/equipos`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

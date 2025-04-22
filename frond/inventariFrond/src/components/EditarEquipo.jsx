@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const EditEquipoPage = () => {
   const { id } = useParams(); 
@@ -16,7 +17,7 @@ const EditEquipoPage = () => {
     const fetchEquipo = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:4000/api/equipos/${id}`, {
+        const response = await fetch( `${API_URL}/api/equipos/${id}`,{
           headers: {
             'Authorization': `Bearer ${token}`
           }
